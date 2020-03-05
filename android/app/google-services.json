@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "317684419728",
+    "firebase_url": "https://esp32-37adf.firebaseio.com",
+    "project_id": "esp32-37adf",
+    "storage_bucket": "esp32-37adf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317684419728:android:dfe98a932b761049b11c15",
+        "android_client_info": {
+          "package_name": "com.winar.wsc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317684419728-9ia2puin2rfbr619jr4aqtmrqv8imjba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVnzkoYBNQxnfz7XxI4j0kEKRUiLl8z94"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317684419728-9ia2puin2rfbr619jr4aqtmrqv8imjba.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
