@@ -3,7 +3,10 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wsc/providers/device_provider.dart';
 import 'package:wsc/screens/dashboard.dart';
+import 'package:wsc/screens/device_details.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,23 +25,31 @@ Future<void> main() async {
           ),
   );
 
-  runApp(MaterialApp(
-    title: "Wireless Stop Contact",
-    theme: ThemeData(      
-      brightness: Brightness.dark,
-      primaryColor: Colors.lightBlue[800],
-      accentColor: Colors.cyan[600],
-      
-      fontFamily: 'Georgia',
-      textTheme: TextTheme(
-        headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-        title: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-        body1: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<DeviceProvider>(create: (context) => DeviceProvider()),
+      ],
+      child: MaterialApp(
+        title: "Wireless Stop Contact",
+        theme: ThemeData(      
+          brightness: Brightness.dark,
+          primaryColor: Colors.lightBlue[800],
+          accentColor: Colors.cyan[600],
+          
+          fontFamily: 'Georgia',
+          textTheme: TextTheme(
+            headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+            title: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+            body1: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+          ),
+        ),
+        initialRoute: DashboardScreen.routeName,
+        routes: <String, WidgetBuilder>{
+          DashboardScreen.routeName: (context) => DashboardScreen(),
+          DeviceDetailsScreen.routeName: (context) => DeviceDetailsScreen(),
+        },
       ),
-    ),
-    initialRoute: '/',
-    routes: <String, WidgetBuilder>{
-      '/': (context) => DashboardScreen(),
-    },
-  ));
+    )
+  );
 }

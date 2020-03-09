@@ -1,26 +1,50 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wsc/arguments/device_details_args.dart';
+import 'package:wsc/models/device.dart';
+import 'package:wsc/networks/database_service.dart';
+import 'package:wsc/screens/device_details.dart';
 import 'package:wsc/widgets/device_card.dart';
 
 class DashboardScreen extends StatelessWidget {
+  static const routeName = '/dashboard';
+
   @override
   Widget build(BuildContext context) {
-    final deviceTitle = ["Device 1"];
-    final deviceDescription = ["This is device 1"];
+    final deviceTitle = [];
+    final deviceDescription = [];
+
+    final db = DatabaseService();
     
     return Scaffold(
       body: Container(
         color: Colors.white,
         padding: EdgeInsets.all(16.0),
-        child: GridView.builder(
-          itemCount: deviceDescription.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 4.0, mainAxisSpacing: 4.0),
-          itemBuilder: (BuildContext context, int index) {
-            return DeviceCard(
-              title: deviceTitle[index],
-              description: deviceDescription[index],
-              onTap: () {
-                print(deviceDescription[index]);
-              },
+        child: StreamBuilder(
+          stream: Firestore.instance.collection('devices').snapshots(),
+          builder: (context, snapshot) {
+            if(!snapshot.hasData) return const Text("Loading...");
+            return GridView.builder(
+              itemCount: snapshot.data.documents.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 4.0, mainAxisSpacing: 4.0),
+              itemBuilder: (BuildContext context, int index) {                
+                DocumentSnapshot dataDocuments = snapshot.data.documents[index];
+
+                return DeviceCard(
+                  title: dataDocuments['title'],
+                  description: dataDocuments['description'],
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      DeviceDetailsScreen.routeName,
+                      arguments: DeviceDetailsScreenArguments(
+                        dataDocuments.documentID,
+                      ),
+                    );
+                  },
+                );
+              }
             );
           }
         ),
