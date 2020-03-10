@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
 class DeviceCard extends StatelessWidget {
-  DeviceCard({@required this.onTap, @required this.title, @required this.description});
+  DeviceCard({@required this.onTap, @required this.title, @required this.description, @required this.status});
   final GestureTapCallback onTap;
   final title;
   final description;
+  final status;
 
   @override
   Widget build(BuildContext context) {
     return Card(      
-      color: Colors.blueGrey,
+      color: Colors.blue,
       child: InkWell(
-        splashColor: Colors.black.withAlpha(30),
+        splashColor: Colors.blueAccent,
         onTap: onTap,
         child: Container(          
           child: Padding(
@@ -25,10 +26,10 @@ class DeviceCard extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: Card(
-                      color: Colors.green,
+                      color: status == true ? Colors.green : Colors.red,
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Text('ON', style: TextStyle(color: Colors.white, fontSize: 12),),
+                        child: Text(status == true ? "On" : "Off", style: TextStyle(color: Colors.white, fontSize: 12),),
                       ),
                     ),
                   ),

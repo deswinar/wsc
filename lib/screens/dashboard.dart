@@ -19,10 +19,10 @@ class DashboardScreen extends StatelessWidget {
     
     return Scaffold(
       body: Container(
-        color: Colors.white,
+        color: Colors.black12,
         padding: EdgeInsets.all(16.0),
         child: StreamBuilder(
-          stream: Firestore.instance.collection('devices').snapshots(),
+          stream: db.getDevices(),
           builder: (context, snapshot) {
             if(!snapshot.hasData) return const Text("Loading...");
             return GridView.builder(
@@ -30,10 +30,11 @@ class DashboardScreen extends StatelessWidget {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 4.0, mainAxisSpacing: 4.0),
               itemBuilder: (BuildContext context, int index) {                
                 DocumentSnapshot dataDocuments = snapshot.data.documents[index];
-
+                print(dataDocuments['status']);
                 return DeviceCard(
                   title: dataDocuments['title'],
                   description: dataDocuments['description'],
+                  status: dataDocuments['status'],
                   onTap: () {
                     Navigator.pushNamed(
                       context,
