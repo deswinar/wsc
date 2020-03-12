@@ -203,22 +203,26 @@ class DeviceDetailsScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 10.0,),
                     Center(
-                      child: CircleAvatar(
-                        radius: 30,
-                        backgroundColor: deviceProvider.status == true ? Colors.green : Colors.red,
-                        child: IconButton(
-                          icon: Icon(Icons.settings_power, color: Colors.white,),
-                          onPressed: () {
-                            if(status == true) {
-                              status = false;
-                            }else {
-                              status = true;
-                            }
-                            deviceProvider.setStatus(status);
-                            db.updateDevice(args.id, {
-                              'status': status,
-                            });
-                          },
+                      child: Selector<DeviceProvider, bool>(
+                        selector: (context, device) => device.status,
+                        builder: (context, device, child) => CircleAvatar(
+                          radius: 30,
+                          backgroundColor: deviceProvider.status == true ? Colors.green : Colors.red,
+                          child: IconButton(
+                            icon: Icon(Icons.settings_power, color: Colors.white,),
+                            onPressed: () {
+                              // if(deviceProvider.status == true) {
+                              //   status = false;
+                              // }else {
+                              //   status = true;
+                              // }
+                              deviceProvider.setStatus(!deviceProvider.status);
+                              status = deviceProvider.status;
+                              db.updateDevice(args.id, {
+                                'status': status,
+                              });
+                            },
+                          ),
                         ),
                       ),
                     ),
