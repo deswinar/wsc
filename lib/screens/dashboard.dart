@@ -92,9 +92,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               showDialog(
                 context: context,
                 builder: (context) => DialogAddDevice(
-                  title: "Add Device",
-                  description: "Add device",
-                  buttonText: "Add"
+                  title: "Enter device code",
                 )
               );
             }

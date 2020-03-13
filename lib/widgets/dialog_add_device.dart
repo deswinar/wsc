@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
 class DialogAddDevice extends StatelessWidget {
-  final String title, description, buttonText;
+  final String title;
   final Image image;
 
   DialogAddDevice({
     @required this.title,
-    @required this.description,
-    @required this.buttonText,
     this.image,
   });
 
@@ -59,26 +57,49 @@ class DialogAddDevice extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16.0),
-              Text(
-                description,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.black
+              TextField(
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  labelText: "Device Code",
+                  labelStyle: TextStyle(color: Colors.blue),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue),
+                    borderRadius: BorderRadius.circular(16.0)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue),
+                    borderRadius: BorderRadius.circular(16.0)
+                  ),
                 ),
               ),
               SizedBox(height: 24.0),
               Align(
                 alignment: Alignment.bottomRight,
-                child: FlatButton(
-                  color: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0)
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop(); // To close the dialog
-                  },
-                  child: Text(buttonText),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    FlatButton(
+                      color: Colors.red,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0)
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop(); // To close the dialog
+                      },
+                      child: Text("Cancel"),
+                    ),
+                    SizedBox(width: 10,),
+                    FlatButton(
+                      color: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0)
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop(); // To close the dialog
+                      },
+                      child: Text("Add"),
+                    ),
+                  ],
                 ),
               ),
             ],
