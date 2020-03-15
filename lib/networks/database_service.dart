@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wsc/models/device.dart';
+import 'package:wsc/providers/device_provider.dart';
 
 class DatabaseService {
   final Firestore _db = Firestore.instance;
@@ -14,14 +15,15 @@ class DatabaseService {
     return _db.collection('devices').snapshots();
   }
 
-  getDevice(String id) {
+  Stream<DeviceProvider> getDevice(String id) {
     return _db
         .collection('devices')
         .document(id)
-        .snapshots();
+        .snapshots()
+        .map((list) => DeviceProvider.fromMap(list.data));
   }
 
-  updateDevice(String id, data) {
+  Future<void> updateDevice(String id, data) {
     return _db.collection('devices').document(id).updateData(data);
   }
 }

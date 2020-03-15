@@ -4,9 +4,9 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
 import 'package:wsc/arguments/device_details_args.dart';
 import 'package:wsc/icons/my_icons.dart';
-import 'package:wsc/models/device.dart';
 import 'package:wsc/networks/database_service.dart';
 import 'package:wsc/screens/device_details.dart';
+import 'package:wsc/screens/scan_device_qr.dart';
 import 'package:wsc/widgets/device_card.dart';
 import 'package:wsc/widgets/dialog_add_device.dart';
 
@@ -38,10 +38,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 4.0, mainAxisSpacing: 4.0),
               itemBuilder: (BuildContext context, int index) {                
                 DocumentSnapshot dataDocuments = snapshot.data.documents[index];
-                print(dataDocuments['status']);
+                // print(dataDocuments['status']);
                 return DeviceCard(
                   title: dataDocuments['title'],
                   description: dataDocuments['description'],
+                  triggerTime: dataDocuments['trigger_time'],
+                  triggerTo: dataDocuments['trigger_to'],
                   status: dataDocuments['status'],
                   onTap: () {
                     Navigator.pushNamed(
@@ -100,9 +102,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
           SpeedDialChild(
             child: Icon(MyIcons.qrcode_1),
             backgroundColor: Colors.blue,
-            label: 'QR Code',
+            label: 'Scan Code',
             labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
-            onTap: () => print('QR Code'),
+            onTap: () {
+              Navigator.pushNamed(
+                      context,
+                      ScanDeviceQrScreen.routeName,
+                    );
+            },
           ),
         ],
       ),

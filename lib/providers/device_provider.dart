@@ -1,58 +1,85 @@
 import 'package:flutter/material.dart';
 
 class DeviceProvider extends ChangeNotifier {
-  String _title = "";
-  String _description = "";
-  String _date = "";
-  String _time = "";
-  bool _triggerTo = true;
-  bool _status = true;
+  String id;
+  String title;
+  String description;
+  String date;
+  String time;
+  String triggerTime;
+  bool triggerTo;
+  bool status;
 
-  String get title => _title;
-  String get description => _description;
-  String get date => _date;
-  String get time => _time;
-  bool get triggerTo => _triggerTo;
-  bool get status => _status;
 
-  set title(String title) {
-    _title = title;
+  DeviceProvider({
+    this.id,
+    this.title,
+    this.description,
+    this.triggerTime,
+    this.triggerTo,
+    this.status
+  });
+
+  void setTitle(String title) {
+    this.title = title;
     notifyListeners();
   }
 
-  set description(String description) {
-    _description = description;
+  void setDescription(String description) {
+    this.description = description;
     notifyListeners();
   }
 
-  set triggerTo(bool triggerTo) {
-    _triggerTo = triggerTo;
-    notifyListeners();
-  }
-
-  void setDate(String date) {
-    _date = date;
-    notifyListeners();
-  }
-
-  void setTime(String time) {
-    _time = time;
+  void setTriggerTime(String triggerTime) {
+    this.triggerTime = triggerTime;
     notifyListeners();
   }
 
   void setTriggerTo(bool triggerTo) {
-    _triggerTo = triggerTo;
+    this.triggerTo = triggerTo;
+    notifyListeners();
+  }
+
+  void setDate(String date) {
+    this.date = date;
+    notifyListeners();
+  }
+
+  void setTime(String time) {
+    this.time = time;
     notifyListeners();
   }
 
   void setStatus(bool status) {
-    _status = status;
+    this.status = status;
     notifyListeners();
   }
 
   update(String title, String description) {
-    _title = title;
-    _description = description;
+    this.title = title;
+    this.description = description;
     notifyListeners();
+  }
+
+  factory DeviceProvider.fromMap(Map<String, dynamic> data) {
+    return DeviceProvider(
+      id: data['id'] ?? '',
+      title: data['title'] ?? '',
+      description: data['description'] ?? '',
+      triggerTime: data['trigger_time'] ?? '',
+      triggerTo: data['trigger_to'] ?? false,
+      status: data['status'] ?? false,
+    );
+  }
+
+  factory DeviceProvider.initialData() {
+    return DeviceProvider(
+      id: '',
+      title: '',
+      description: '',
+      triggerTime: '',
+      triggerTo: false,
+      status: false,
+    );
   }
 }

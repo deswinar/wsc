@@ -1,34 +1,37 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wsc/networks/database_service.dart';
 import 'package:wsc/providers/device_provider.dart';
 import 'package:wsc/screens/dashboard.dart';
 import 'package:wsc/screens/device_details.dart';
+import 'package:wsc/screens/scan_device_qr.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final FirebaseApp app = await FirebaseApp.configure(
-    name: 'esp32',
-    options: Platform.isIOS
-        ? const FirebaseOptions(
-            googleAppID: '1:317684419728:ios:420e96cd81c603c4b11c15',
-            gcmSenderID: '317684419728',
-            databaseURL: 'https://esp32-37adf.firebaseio.com',
-          )
-        : const FirebaseOptions(
-            googleAppID: '1:317684419728:android:dfe98a932b761049b11c15',
-            apiKey: 'AIzaSyBY5wicLz5Bo6J0v-cenKrUzGcpVWyg6dY',
-            databaseURL: 'https://esp32-37adf.firebaseio.com',
-          ),
-  );
+  // final FirebaseApp app = await FirebaseApp.configure(
+  //   name: 'esp32',
+  //   options: Platform.isIOS
+  //       ? const FirebaseOptions(
+  //           googleAppID: '1:317684419728:ios:420e96cd81c603c4b11c15',
+  //           gcmSenderID: '317684419728',
+  //           databaseURL: 'https://esp32-37adf.firebaseio.com',
+  //         )
+  //       : const FirebaseOptions(
+  //           googleAppID: '1:317684419728:android:dfe98a932b761049b11c15',
+  //           apiKey: 'AIzaSyBY5wicLz5Bo6J0v-cenKrUzGcpVWyg6dY',
+  //           databaseURL: 'https://esp32-37adf.firebaseio.com',
+  //         ),
+  // );
+
+  final DatabaseService _db = DatabaseService();
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider<DeviceProvider>(create: (context) => DeviceProvider()),
+        StreamProvider(create: (context) => _db.getDevices(),),
       ],
       child: MaterialApp(
         title: "Wireless Stop Contact",
@@ -48,6 +51,7 @@ Future<void> main() async {
         routes: <String, WidgetBuilder>{
           DashboardScreen.routeName: (context) => DashboardScreen(),
           DeviceDetailsScreen.routeName: (context) => DeviceDetailsScreen(),
+          ScanDeviceQrScreen.routeName: (context) => ScanDeviceQrScreen(),
         },
       ),
     )

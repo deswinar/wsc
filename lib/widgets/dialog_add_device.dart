@@ -27,7 +27,7 @@ class DialogAddDevice extends StatelessWidget {
         //...bottom card part,
         Container(
           padding: EdgeInsets.only(
-            top: Consts.avatarRadius + Consts.padding,
+            top: Consts.padding,
             bottom: Consts.padding,
             left: Consts.padding,
             right: Consts.padding,
@@ -106,14 +106,14 @@ class DialogAddDevice extends StatelessWidget {
           ),
         ),
         //...top circlular image part,
-        Positioned(
-          left: Consts.padding,
-          right: Consts.padding,
-          child: CircleAvatar(
-            backgroundColor: Colors.blue,
-            radius: Consts.avatarRadius,
-          ),
-        ),
+        // Positioned(
+        //   left: Consts.padding,
+        //   right: Consts.padding,
+        //   child: CircleAvatar(
+        //     backgroundColor: Colors.blue,
+        //     radius: Consts.avatarRadius,
+        //   ),
+        // ),
       ],
     );
   }
